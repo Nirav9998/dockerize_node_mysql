@@ -1,0 +1,29 @@
+version: '3.3'
+   
+services:
+  mydb:
+    image: mysql:latest
+    env_file:
+      - ./.env
+    environment:
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+    ports:
+      - $DB_PORT:$DB_PORT 
+    volumes:
+      - "dbase:/var/lib/mysql"
+  app:
+    depends_on:
+      - mydb  
+    env_file:
+      - ./.env
+    build: ./
+    ports:
+      - $PORT:$PORT
+    
+volumes:
+  dbase:   
+
+      
